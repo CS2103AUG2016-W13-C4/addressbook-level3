@@ -25,7 +25,11 @@ public class Parser {
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
-
+    
+    public static final Pattern EDIT_PERSON_DETAIL_ARGS_FORMAT = 
+            Pattern.compile("(?<targetIndex>.+)" 
+                    + " (?<editType>[^/]+)"
+                    + "/(?<newPersonDetail>[^/]+)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -65,6 +69,9 @@ public class Parser {
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
 
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
+                
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
 
@@ -132,6 +139,13 @@ public class Parser {
     }
 
     /**
+     * Checks whether the edit type of an edit command is valid.
+     */
+    private static boolean isEditTypeValid(String editType) {
+        return editType.equals("n") || editType.equals("p") || editType.equals("e") || editType.equals("a");
+    }
+    
+    /**
      * Extracts the new person's tags from the add command's tag arguments string.
      * Merges duplicate tag strings.
      */
@@ -161,6 +175,31 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args) {
+        final Matcher matcher = EDIT_PERSON_DETAIL_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+       
+        try {
+            final int targetIndex = Integer.parseInt(matcher.group("targetIndex"));
+            final String editType = matcher.group("editType");
+            if (!isEditTypeValid(editType)) {
+                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            }
+            final String newPersonDetail = matcher.group("newPersonDetail");
+            return new EditCommand(targetIndex, editType, newPersonDetail);
+        } catch (NumberFormatException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+    }
+    
     /**
      * Parses arguments in the context of the view command.
      *
