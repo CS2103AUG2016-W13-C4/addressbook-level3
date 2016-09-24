@@ -12,6 +12,8 @@ import java.util.*;
  * @see Utils#elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
+    
+    public static final Comparator<Person> NAME = (Person p1, Person p2) -> p1.getName().toString().compareTo(p2.getName().toString());
 
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list.
@@ -112,7 +114,14 @@ public class UniquePersonList implements Iterable<Person> {
     public void clear() {
         internalList.clear();
     }
-
+    
+    /**
+     * Sorts the list in alphabetical order of the persons names.
+     */
+    public void sort() {
+        Collections.sort(internalList, NAME);
+    }
+    
     @Override
     public Iterator<Person> iterator() {
         return internalList.iterator();

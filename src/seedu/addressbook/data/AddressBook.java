@@ -137,6 +137,13 @@ public class AddressBook {
     public UniquePersonList getAllPersons() {
         return new UniquePersonList(allPersons);
     }
+    
+    /**
+     *  @return The original UniquePersonList of all persons in the address book at the time of the call.
+     */
+    public UniquePersonList getAllPersonsOriginal() {
+        return allPersons;
+    }
 
     /**
      * Defensively copied UniqueTagList of all tags in the address book at the time of the call.
