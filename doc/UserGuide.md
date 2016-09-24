@@ -69,6 +69,21 @@ Examples:
   `delete 1`<br>
   Deletes the 1st person in the results of the `find` command.
 
+## Editing a person : `edit`
+Edits a property of the specified person from the address book. <br>
+Format: `edit INDEX EDITTYPE/NEWDETAIL`
+
+> Edits the person at the specified `INDEX`. 
+  The index refers to the index number shown in the most recent listing.
+
+Examples: 
+* `list`<br>
+  `edit 2 n/Elsa`<br>
+  Changes the name of 2nd person in the address book to become Elsa.
+* `find Zhi Yuan`<br> 
+  `edit 1 a/weasel street`<br>
+  Changes the address of 1st person in the results of the `find` command.
+
 ## View non-private details of a person : `view`
 Displays the non-private details of the specified person.<br>
 Format: `view INDEX`
