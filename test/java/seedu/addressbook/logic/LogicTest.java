@@ -12,6 +12,7 @@ import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
+import seedu.addressbook.history.History;
 import seedu.addressbook.storage.StorageFile;
 
 import java.util.*;
@@ -31,6 +32,7 @@ public class LogicTest {
     private StorageFile saveFile;
     private AddressBook addressBook;
     private Logic logic;
+    private History history;
 
     @Before
     public void setup() throws Exception {
@@ -38,6 +40,7 @@ public class LogicTest {
         addressBook = new AddressBook();
         saveFile.save(addressBook);
         logic = new Logic(saveFile, addressBook);
+        history = new History();
     }
 
     @Test
@@ -78,7 +81,7 @@ public class LogicTest {
                                       List<? extends ReadOnlyPerson> lastShownList) throws Exception {
 
         //Execute the command
-        CommandResult r = logic.execute(inputCommand);
+        CommandResult r = logic.execute(inputCommand, history);
 
         //Confirm the result contains the right data
         assertEquals(expectedMessage, r.feedbackToUser);

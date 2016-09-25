@@ -5,9 +5,11 @@ import java.util.Stack;
 public class History {
 
     private Stack<PreviousCommand> previousCommands;
+    private Stack<PreviousCommand> redoCommands;
     
     public History(){
         previousCommands = new Stack<PreviousCommand>();
+        redoCommands = new Stack<PreviousCommand>();
     }
     
     public void update(PreviousCommand prevCmd){
@@ -18,7 +20,19 @@ public class History {
         return previousCommands.isEmpty();
     }
     
+    public boolean isLatest(){
+        return redoCommands.isEmpty();
+    }
+    
     public PreviousCommand revertStep(){
-        return previousCommands.pop();
+        return redoCommands.push(previousCommands.pop());
+    }
+    
+    public PreviousCommand redoStep(){
+        return previousCommands.push(redoCommands.pop());
+    }
+    
+    public void resetRedo(){
+       redoCommands = new Stack<PreviousCommand>();
     }
 }

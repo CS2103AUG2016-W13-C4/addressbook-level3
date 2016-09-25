@@ -1,7 +1,11 @@
 package seedu.addressbook.logic;
 
+import seedu.addressbook.commands.AddCommand;
+import seedu.addressbook.commands.ClearCommand;
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandResult;
+import seedu.addressbook.commands.DeleteCommand;
+import seedu.addressbook.commands.EditCommand;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.history.History;
@@ -86,7 +90,9 @@ public class Logic {
     private CommandResult execute(Command command, History history) throws Exception {
         command.setData(addressBook, lastShownList);
         CommandResult result = command.execute(history);
-        
+        if (command instanceof AddCommand || command instanceof ClearCommand || command instanceof DeleteCommand || command instanceof EditCommand){
+            history.resetRedo();
+        }
         storage.save(addressBook);
         return result;
     }

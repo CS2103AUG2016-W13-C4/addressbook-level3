@@ -118,6 +118,14 @@ Examples:
 Clears all entries from the address book.<br>
 Format: `clear`  
 
+## Undo last command : `undo`
+Undo the previous command.<br>
+Format: `undo`  
+
+## Redo last command : `redo`
+Redo the previous command.<br>
+Format: `redo` 
+
 ## Exiting the program : `exit`
 Exits the program.<br>
 Format: `exit`  
