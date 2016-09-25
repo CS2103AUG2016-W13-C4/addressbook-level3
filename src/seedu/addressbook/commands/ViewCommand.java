@@ -2,6 +2,7 @@ package seedu.addressbook.commands;
 
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.history.History;
 
 
 /**
@@ -26,7 +27,7 @@ public class ViewCommand extends Command {
 
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(History history) {
         try {
             final ReadOnlyPerson target = getTargetPerson();
             if (!addressBook.containsPerson(target)) {

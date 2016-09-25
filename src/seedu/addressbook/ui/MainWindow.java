@@ -9,6 +9,7 @@ import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.history.History;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +23,10 @@ public class MainWindow {
 
     private Logic logic;
     private Stoppable mainApp;
+    private History history;
 
     public MainWindow(){
+        this.history = new History();
     }
 
     public void setLogic(Logic logic){
@@ -32,6 +35,10 @@ public class MainWindow {
 
     public void setMainApp(Stoppable mainApp){
         this.mainApp = mainApp;
+    }
+    
+    public void setHistory(History history){
+        this.history = history;
     }
 
     @FXML
@@ -45,7 +52,7 @@ public class MainWindow {
     void onCommand(ActionEvent event) {
         try {
             String userCommandText = commandInput.getText();
-            CommandResult result = logic.execute(userCommandText);
+            CommandResult result = logic.execute(userCommandText, history);
             if(isExitCommand(result)){
                 exitApp();
                 return;

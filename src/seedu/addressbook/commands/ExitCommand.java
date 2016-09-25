@@ -1,5 +1,7 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.history.History;
+
 /**
  * Terminates the program.
  */
@@ -12,7 +14,7 @@ public class ExitCommand extends Command {
     public static final String MESSAGE_EXIT_ACKNOWEDGEMENT = "Exiting Address Book as requested ...";
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(History history) {
         return new CommandResult(MESSAGE_EXIT_ACKNOWEDGEMENT);
     }
 

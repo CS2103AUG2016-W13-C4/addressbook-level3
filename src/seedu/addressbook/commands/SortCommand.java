@@ -1,6 +1,7 @@
 package seedu.addressbook.commands;
 
 import seedu.addressbook.data.person.*;
+import seedu.addressbook.history.History;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class SortCommand extends Command {
             + "Sorts the address book in alphabetical order and lists it.";
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(History history) {
         UniquePersonList allPersons = addressBook.getAllPersonsOriginal();
         allPersons.sort();
         List<ReadOnlyPerson> allPersonsSorted = allPersons.immutableListView();

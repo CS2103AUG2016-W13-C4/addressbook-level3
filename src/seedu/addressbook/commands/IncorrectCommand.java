@@ -1,5 +1,6 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.history.History;
 
 /**
  * Represents an incorrect command. Upon execution, produces some feedback to the user.
@@ -13,7 +14,7 @@ public class IncorrectCommand extends Command{
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(History history) {
         return new CommandResult(feedbackToUser);
     }
 

@@ -1,5 +1,6 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.history.History;
 
 /**
  * Shows help instructions.
@@ -26,7 +27,7 @@ public class HelpCommand extends Command {
     public HelpCommand() {}
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(History history) {
         return new CommandResult(MESSAGE_ALL_USAGES);
     }
 }

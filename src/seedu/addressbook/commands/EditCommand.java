@@ -1,9 +1,14 @@
 package seedu.addressbook.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
+import seedu.addressbook.history.History;
+import seedu.addressbook.history.PreviousCommand;
 
 /**
  * Edit a specific detail of a person.
@@ -39,11 +44,15 @@ public class EditCommand extends Command {
     }
     
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(History history) {
         try {
+            List<Person> affectedPersons = new ArrayList<Person>();            
             final ReadOnlyPerson target = getTargetPerson();
             Person targetWithNewDetail = getNewPersonWithEditedDetail(target);
-            
+            affectedPersons.add((Person)target);
+            affectedPersons.add(targetWithNewDetail);
+            history.update(new PreviousCommand(COMMAND_WORD, affectedPersons));
+           
             addressBook.removePerson(target);
             addressBook.addPerson(targetWithNewDetail);
             return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, targetWithNewDetail));
